@@ -3,16 +3,13 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 
 	kafka "github.com/brwillian/kafka-consumer-api/config"
 	models "github.com/brwillian/kafka-consumer-api/models"
 	services "github.com/brwillian/kafka-consumer-api/services"
 	ckafka "github.com/confluentinc/confluent-kafka-go/kafka"
 )
-
-type KafkaMessage struct {
-	caminhoImagem string
-}
 
 func main() {
 	callServices()
@@ -31,9 +28,10 @@ func callServices() {
 			fmt.Println(err.Error())
 		}
 
-		result := services.ConsumeOcrApi(services.ReadImage(kmsg.CaminhoImagem))
+		log.Println(string(msg.Value))
+		val := services.GetResult(kmsg)
 
-		fmt.Println(string(result))
+		services.SaveDb(val)
 
 	}
 }

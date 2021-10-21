@@ -1,4 +1,4 @@
-package kafka
+package config
 
 import (
 	"fmt"
@@ -8,9 +8,9 @@ import (
 )
 
 const (
-	topic         = "FrotaBoiola"
+	topic         = "FrotaBoiola2"
 	brokerAddress = "192.168.250.11:9092"
-	groupId       = "Kafka-IA-3"
+	groupId       = "Kafka-IA"
 )
 
 type KafkaConsumer struct {

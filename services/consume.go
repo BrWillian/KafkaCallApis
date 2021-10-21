@@ -3,15 +3,15 @@ package service
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 )
 
 const (
 	ocr_api           = "http://192.168.250.110:5001/api/ocr"
-	capacete_api      = "http://127.0.0.1:5002/api/1.0/capacete"
-	classificador_api = "http://192.168.250.110:5003/api/classificador/veicular"
+	capacete_api      = "http://127.0.0.1:5003/api/1.0/capacete"
+	classificador_api = "http://192.168.250.110:5002/api/classificador/veicular"
 )
 
 func ConsumeOcrApi(image string) []byte {
@@ -28,11 +28,14 @@ func ConsumeOcrApi(image string) []byte {
 	response, err := client.Do(request)
 
 	if err != nil {
-		log.Fatal(err.Error())
-	}
-	data, _ := ioutil.ReadAll(response.Body)
+		fmt.Println(err.Error())
+	} else {
+		data, _ := ioutil.ReadAll(response.Body)
 
-	return data
+		return data
+	}
+	return nil
+
 }
 func ConsumeCapaceteApi(image string) []byte {
 	jsonData := map[string]string{"image": image}
@@ -47,11 +50,13 @@ func ConsumeCapaceteApi(image string) []byte {
 	response, err := client.Do(request)
 
 	if err != nil {
-		log.Fatal(err.Error())
-	}
-	data, _ := ioutil.ReadAll(response.Body)
+		fmt.Println(err.Error())
+	} else {
+		data, _ := ioutil.ReadAll(response.Body)
 
-	return data
+		return data
+	}
+	return nil
 }
 
 func ConsumeClassificadorApi(image string) []byte {
@@ -67,9 +72,11 @@ func ConsumeClassificadorApi(image string) []byte {
 	response, err := client.Do(request)
 
 	if err != nil {
-		log.Fatal(err.Error())
-	}
-	data, _ := ioutil.ReadAll(response.Body)
+		fmt.Println(err.Error())
+	} else {
+		data, _ := ioutil.ReadAll(response.Body)
 
-	return data
+		return data
+	}
+	return nil
 }
