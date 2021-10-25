@@ -2,15 +2,15 @@ package service
 
 import (
 	"encoding/base64"
+	"fmt"
 	"io/ioutil"
-	"log"
 )
 
 func ReadImage(imgPath string) string {
 	bytes, err := ioutil.ReadFile(imgPath)
 
 	if err != nil {
-		log.Fatal(err)
+		fmt.Println(err.Error())
 	}
 
 	return toBase64(bytes)

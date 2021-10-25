@@ -102,7 +102,7 @@ func SaveDb(data models.Canonico) {
 
 	rows, err := db.Query("select SQ_CLASSIFICACAO_PASSAGEM.nextval from dual")
 	if err != nil {
-		fmt.Println("Error running query")
+		fmt.Println("...Error running query")
 		fmt.Println(err)
 		return
 	}
@@ -127,6 +127,6 @@ func SaveDb(data models.Canonico) {
 		log.Fatal(err.Error())
 	}
 
-	fmt.Println("deu Bom!")
+	fmt.Println("...Recorded data!")
 
 }

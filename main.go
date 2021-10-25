@@ -4,15 +4,28 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"net/http"
 
 	kafka "github.com/brwillian/kafka-consumer-api/config"
 	models "github.com/brwillian/kafka-consumer-api/models"
+	routers "github.com/brwillian/kafka-consumer-api/routers"
 	services "github.com/brwillian/kafka-consumer-api/services"
 	ckafka "github.com/confluentinc/confluent-kafka-go/kafka"
+	"github.com/gorilla/mux"
 )
 
 func main() {
-	callServices()
+	go func() {
+		callServices()
+	}()
+	handleRequests()
+}
+func handleRequests() {
+	myRouter := mux.NewRouter()
+	myRouter.HandleFunc("/api/version", routers.GetVersion)
+	myRouter.HandleFunc("/api/health", routers.HealthCheck)
+	myRouter.HandleFunc("/api/ready", routers.Ready)
+	log.Fatal(http.ListenAndServe(":10000", myRouter))
 }
 
 func callServices() {

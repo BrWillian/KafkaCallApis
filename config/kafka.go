@@ -10,7 +10,8 @@ import (
 const (
 	topic         = "FrotaBoiola2"
 	brokerAddress = "192.168.250.11:9092"
-	groupId       = "Kafka-IA"
+	groupId       = "Kafka-IA-10"
+	offset        = "latest"
 )
 
 type KafkaConsumer struct {
@@ -26,6 +27,7 @@ func (k *KafkaConsumer) Consume() {
 	configMap := &ckafka.ConfigMap{
 		"bootstrap.servers": brokerAddress,
 		"group.id":          groupId,
+		"auto.offset.reset": "latest",
 	}
 	c, err := ckafka.NewConsumer(configMap)
 	if err != nil {
