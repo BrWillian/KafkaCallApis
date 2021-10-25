@@ -12,7 +12,8 @@ type Canonico struct {
 	Placa             *string   `db:"placa"`
 	PlacaOcr          string    `db:"placa_ocr"`
 	Classificacao     int       `db:"classificacao_id"`
-	ClassificacaoIa   int       `db:"classificacaoia_id"`
+	ClassificacaoIa   *int      `db:"classificacaoia_id"`
 	SemCapacete       *int      `db:"sem_capacete"`
 	CaminhoImagem     string    `db:"caminho_imagem"`
+	PassouOcr         int       `db:"ocr"`
 }

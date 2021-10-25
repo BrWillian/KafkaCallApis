@@ -31,7 +31,7 @@ func callServices() {
 		log.Println(string(msg.Value))
 		val := services.GetResult(kmsg)
 
-		services.SaveDb(val)
+		go services.SaveDb(val)
 
 	}
 }

@@ -16,9 +16,9 @@ type Boxes struct {
 	H int `json:"h"`
 }
 type Detections struct {
-	Id         int     `json:"id"`
-	Confidence float32 `json:"confidence"`
-	Boxes      Boxes   `json:"boxes"`
+	Id         int    `json:"id"`
+	Confidence string `json:"confidence"`
+	Boxes      Boxes  `json:"boxes"`
 }
 
 // Rede OCR
