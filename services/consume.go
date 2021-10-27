@@ -6,12 +6,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-)
-
-const (
-	ocr_api           = "http://192.168.250.110:5001/api/ocr"
-	capacete_api      = "http://127.0.0.1:5003/api/1.0/capacete"
-	classificador_api = "http://192.168.250.110:5002/api/classificador/veicular"
+	"os"
 )
 
 func ConsumeOcrApi(image string) []byte {
@@ -19,7 +14,7 @@ func ConsumeOcrApi(image string) []byte {
 	jsonData := map[string]string{"image": image}
 	jsonValue, _ := json.Marshal(jsonData)
 
-	request, _ := http.NewRequest("POST", ocr_api, bytes.NewBuffer(jsonValue))
+	request, _ := http.NewRequest("POST", os.Getenv("APIOCR_URL"), bytes.NewBuffer(jsonValue))
 
 	request.Header.Set("Content-Type", "application/json")
 
@@ -41,7 +36,7 @@ func ConsumeCapaceteApi(image string) []byte {
 	jsonData := map[string]string{"image": image}
 	jsonValue, _ := json.Marshal(jsonData)
 
-	request, _ := http.NewRequest("POST", capacete_api, bytes.NewBuffer(jsonValue))
+	request, _ := http.NewRequest("POST", os.Getenv("APICAPACETE_URL"), bytes.NewBuffer(jsonValue))
 
 	request.Header.Set("Content-Type", "application/json")
 
@@ -63,7 +58,7 @@ func ConsumeClassificadorApi(image string) []byte {
 	jsonData := map[string]string{"image": image}
 	jsonValue, _ := json.Marshal(jsonData)
 
-	request, _ := http.NewRequest("POST", classificador_api, bytes.NewBuffer(jsonValue))
+	request, _ := http.NewRequest("POST", os.Getenv("APICLASSIFICADOR_URL"), bytes.NewBuffer(jsonValue))
 
 	request.Header.Set("Content-Type", "application/json")
 

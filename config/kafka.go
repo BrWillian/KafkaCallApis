@@ -3,15 +3,15 @@ package config
 import (
 	"fmt"
 	"log"
+	"os"
 
 	ckafka "github.com/confluentinc/confluent-kafka-go/kafka"
 )
 
 const (
-	topic         = "FrotaBoiola2"
-	brokerAddress = "192.168.250.11:9092"
-	groupId       = "Kafka-IA-10"
-	offset        = "latest"
+	topic   = "flautim_canonico"
+	groupId = "Jacu-Estalo-Ia"
+	offset  = "latest"
 )
 
 type KafkaConsumer struct {
@@ -25,9 +25,9 @@ func NewKafkaConsumer(msgChan chan *ckafka.Message) *KafkaConsumer {
 }
 func (k *KafkaConsumer) Consume() {
 	configMap := &ckafka.ConfigMap{
-		"bootstrap.servers": brokerAddress,
+		"bootstrap.servers": os.Getenv("KAFKA_BOOTSTRAP_SERVERS"),
 		"group.id":          groupId,
-		"auto.offset.reset": "latest",
+		"auto.offset.reset": offset,
 	}
 	c, err := ckafka.NewConsumer(configMap)
 	if err != nil {

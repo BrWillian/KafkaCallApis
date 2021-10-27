@@ -3,6 +3,7 @@ package config
 import (
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/jmoiron/sqlx"
 )
@@ -10,7 +11,7 @@ import (
 func DbConn() bool {
 	fmt.Println("... Iniciando conexão com banco!")
 
-	db, err := sqlx.Open("godror", `user="xxxx" password="xxxx" connectString="(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=DTF-LBDEXP-DEV.datatraffic.com.br)(PORT=1521))(CONNECT_DATA=(Service_name=xe)))"`)
+	db, err := sqlx.Open("godror", os.Getenv("DATASOURCE_URL"))
 	defer db.Close()
 
 	if err = db.Ping(); err != nil {

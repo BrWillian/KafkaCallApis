@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"os"
 	"sort"
 	"strconv"
 	"time"
@@ -62,9 +63,9 @@ func GetResult(msg models.KafkaMessage) models.Canonico {
 			canonico.SemCapacete = nil
 			if capaceteResult != nil {
 				json.Unmarshal(capaceteResult, &capacete)
+				canonico.SemCapacete = new(int)
+				*canonico.SemCapacete = bool2int(capacete.SemCapacete)
 			}
-			canonico.SemCapacete = new(int)
-			*canonico.SemCapacete = bool2int(capacete.SemCapacete)
 
 		} else {
 			canonico.SemCapacete = new(int)
@@ -97,7 +98,7 @@ func GetResult(msg models.KafkaMessage) models.Canonico {
 
 func SaveDb(data models.Canonico) {
 
-	db, err := sqlx.Open("godror", `user="ANTT_OCORRENCIA" password="anttocorrencia" connectString="(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=DTF-LBDEXP-DEV.datatraffic.com.br)(PORT=1521))(CONNECT_DATA=(Service_name=xe)))"`)
+	db, err := sqlx.Open("godror", os.Getenv("DATASOURCE_URL"))
 	defer db.Close()
 
 	rows, err := db.Query("select SQ_CLASSIFICACAO_PASSAGEM.nextval from dual")
